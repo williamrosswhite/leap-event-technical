@@ -1,0 +1,71 @@
+# .gitignore for React frontend and C# backend
+
+# General
+.DS_Store
+Thumbs.db
+
+# Node.js (React Frontend)
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.parcel-cache/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+frontend/.eslintcache
+frontend/.yarn/*
+!frontend/.yarn/patches
+!frontend/.yarn/plugins
+!frontend/.yarn/releases
+!frontend/.yarn/sdks
+!frontend/.yarn/versions
+
+# Logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# C# (ASP.NET Core Backend)
+backend/bin/
+backend/obj/
+backend/*.user
+backend/*.suo
+backend/*.userosscache
+backend/*.sln.docstates
+backend/.vs/
+backend/.idea/
+backend/.vscode/
+
+# Database
+backend/Database/*.db
+backend/Database/*.sqlite
+backend/Database/*.bak
+
+# Build artifacts
+backend/*.dll
+backend/*.exe
+backend/*.pdb
+backend/*.cache
+backend/*.log
+backend/*.vspscc
+backend/*.vssscc
+backend/*.csproj.user
+backend/*.csproj.nuget.g.props
+backend/*.csproj.nuget.g.targets
+
+# Secrets
+backend/appsettings.json
+backend/appsettings.Development.json
+backend/secrets.json
+
+# Test results
+backend/TestResults/
+backend/*.trx
+backend/coverage/
+
+# IDE-specific files
+*.swp
+*.sln.ide
+*.sln.cache
+*.sln.docstates
+.fake
