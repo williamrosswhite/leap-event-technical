@@ -1,0 +1,17 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="TicketSales" table="TicketSales">
+    <!-- Primary Key -->
+    <id name="Id" column="Id">
+      <generator class="assigned" />
+    </id>
+
+    <!-- Properties -->
+    <property name="EventId" column="EventId" not-null="true" />
+    <property name="UserId" column="UserId" not-null="true" />
+    <property name="PurchaseDate" column="PurchaseDate" not-null="true" />
+    <property name="PriceInCents" column="PriceInCents" not-null="true" />
+
+    <!-- Foreign Key Relationship -->
+    <many-to-one name="Event" class="Event" column="EventId" not-null="true" cascade="all" />
+  </class>
+</hibernate-mapping>

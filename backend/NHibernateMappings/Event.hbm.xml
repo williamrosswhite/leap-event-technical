@@ -1,0 +1,14 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Event" table="Events">
+    <!-- Primary Key -->
+    <id name="Id" column="Id">
+      <generator class="assigned" />
+    </id>
+
+    <!-- Properties -->
+    <property name="Name" column="Name" not-null="true" />
+    <property name="StartsOn" column="StartsOn" not-null="true" />
+    <property name="EndsOn" column="EndsOn" not-null="true" />
+    <property name="Location" column="Location" not-null="true" />
+  </class>
+</hibernate-mapping>
