@@ -1,0 +1,16 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="LeapEventTechnical" namespace="Models">
+  <class name="TicketSales" table="TicketSales">
+    <!-- Primary Key -->
+    <id name="Id" column="Id" type="string">
+      <generator class="assigned" />
+    </id>
+
+    <!-- Properties -->
+    <property name="UserId" column="UserId" type="string"  not-null="true" />
+    <property name="PurchaseDate" column="PurchaseDate" type="datetime" not-null="true" />
+    <property name="PriceInCents" column="PriceInCents" type="int" not-null="true" />
+
+    <!-- Foreign Key Relationship -->
+    <many-to-one name="Event" class="Models.Event" column="EventId" not-null="true" cascade="none" />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build", // Renamed to 'build'
+            "type": "shell",
+            "command": "dotnet build",
+            "args": [
+                "${workspaceFolder}/leap-event-technical.sln"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "detail": "Build the leap-event-technical.sln solution using dotnet build"
+        }
+    ]
+}
