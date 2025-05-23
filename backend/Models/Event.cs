@@ -1,8 +1,11 @@
-public class Event
+namespace Models
 {
-    public virtual string Id { get; set; }
-    public virtual string Name { get; set; }
-    public virtual DateTime StartsOn { get; set; }
-    public virtual DateTime EndsOn { get; set; }
-    public virtual string Location { get; set; }
+    public class Event
+    {
+        public virtual required string Id { get; set; }
+        public virtual required string Name { get; set; }
+        public virtual required DateTime StartsOn { get; set; }
+        public virtual required DateTime EndsOn { get; set; }
+        public virtual required string Location { get; set; }
+    }
 }

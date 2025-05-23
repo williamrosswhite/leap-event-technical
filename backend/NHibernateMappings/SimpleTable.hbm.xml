@@ -1,0 +1,8 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="LeapEventTechnical" namespace="Models">
+  <class name="SimpleTable" table="SimpleTable">
+    <id name="Id" column="Id" type="string">
+      <generator class="assigned" />
+    </id>
+    <property name="Name" column="Name" type="string" not-null="true" />
+  </class>
+</hibernate-mapping>

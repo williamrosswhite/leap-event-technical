@@ -21,7 +21,7 @@ public static class NHibernateHelper
         }
     }
 
-    public static ISession OpenSession()
+    public static NHibernate.ISession OpenSession()
     {
         return SessionFactory.OpenSession();
     }

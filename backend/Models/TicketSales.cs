@@ -1,11 +1,13 @@
-public class TicketSales
+namespace Models
 {
-    public virtual string Id { get; set; }
-    public virtual string EventId { get; set; }
-    public virtual string UserId { get; set; }
-    public virtual DateTime PurchaseDate { get; set; } 
-    public virtual int PriceInCents { get; set; }
+    public class TicketSales
+    {
+        public virtual required string Id { get; set; }
+        public virtual required string UserId { get; set; }
+        public virtual required DateTime PurchaseDate { get; set; }
+        public virtual required int PriceInCents { get; set; }
 
-    // Navigation Property References Related Event
-    public virtual Event Event { get; set; }
+        // Navigation Property References Related Event
+        public virtual required Event Event { get; set; }
+    }
 }

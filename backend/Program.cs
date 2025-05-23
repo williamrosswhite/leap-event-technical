@@ -1,44 +1,57 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore.Mvc;
+using NHibernate;
+using NHibernate.Cfg;
+using Serilog;
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
+
+// Add services to the container
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(); // Ensure Swagger services are added
+
+builder.Services.AddSingleton<ISessionFactory>(provider =>
+{
+    var configuration = new Configuration();
+    configuration.Configure(); // Reads hibernate.cfg.xml
+    configuration.AddDirectory(new System.IO.DirectoryInfo("NHibernateMappings")); // Load mapping files
+    configuration.SetProperty("nhibernate.logger.factory", "NHibernate.Extensions.Logging.LoggerFactory");
+
+    return configuration.BuildSessionFactory();
+});
+
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger(); // Ensure Swagger middleware is added
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+/////////////////////////////////////////////////////////////////////////
+// TODO: Add Move this to a the event controller
+/////////////////////////////////////////////////////////////////////////
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/api/events", ([FromServices] IEventService eventService, [FromQuery] int days) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    if (days != 30 && days != 60 && days != 180)
+    {
+        return Results.BadRequest("Invalid value for 'days'. Allowed values are 30, 60, or 180.");
+    }
+
+    var events = eventService.GetEventsWithinDays(days);
+    return Results.Ok(events);
 })
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+.WithName("GetEvents");
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
