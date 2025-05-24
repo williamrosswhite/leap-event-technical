@@ -12,7 +12,8 @@ builder.Host.UseSerilog();
 
 // Add services to the container
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); // Ensure Swagger services are added
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
 builder.Services.AddSingleton<ISessionFactory>(provider =>
 {
@@ -32,26 +33,20 @@ var app = builder.Build();
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(); // Ensure Swagger middleware is added
+    app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
+
 /////////////////////////////////////////////////////////////////////////
-// TODO: Add Move this to a the event controller
+
+/////////////////////////////////////////////////////////////////////////
+// TODO: Scour committed files for revealing comments
 /////////////////////////////////////////////////////////////////////////
 
-app.MapGet("/api/events", ([FromServices] IEventService eventService, [FromQuery] int days) =>
-{
-    if (days != 30 && days != 60 && days != 180)
-    {
-        return Results.BadRequest("Invalid value for 'days'. Allowed values are 30, 60, or 180.");
-    }
+/////////////////////////////////////////////////////////////////////////
 
-    var events = eventService.GetEventsWithinDays(days);
-    return Results.Ok(events);
-})
-.WithName("GetEvents");
-
+app.MapControllers();
 app.Run();
