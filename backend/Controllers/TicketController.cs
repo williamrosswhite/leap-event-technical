@@ -31,6 +31,13 @@ public class TicketsController : ControllerBase
   public IActionResult GetTop5EventsByTicketCount()
   {
     var topEvents = _ticketService.GetTop5EventsByTicketCount();
+        // Serialize the object to JSON for detailed output
+    var serializedEvents = System.Text.Json.JsonSerializer.Serialize(topEvents, new System.Text.Json.JsonSerializerOptions
+    {
+        WriteIndented = true // Pretty-print the JSON
+    });
+
+    Console.WriteLine(serializedEvents); // Print the serialized JSON to the console
     return Ok(topEvents);
   }
 

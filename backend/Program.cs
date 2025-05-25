@@ -15,6 +15,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // Allow requests from React frontend
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddSingleton<ISessionFactory>(provider =>
 {
     var configuration = new Configuration();
@@ -48,5 +58,6 @@ app.UseHttpsRedirection();
 
 /////////////////////////////////////////////////////////////////////////
 
+app.UseCors();
 app.MapControllers();
 app.Run();
