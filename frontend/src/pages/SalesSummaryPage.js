@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import '../styles/common.css'; // Import shared styles
+import '../styles/SalesSummaryPage.css'; // Import page-specific styles
 
 const SalesSummaryPage = () => {
   const [salesByTickets, setSalesByTickets] = useState([]);
   const [salesByRevenue, setSalesByRevenue] = useState([]);
   const [error, setError] = useState(null); // Track API errors
+  const [loading, setLoading] = useState(false); // Track loading state
   const [activeTab, setActiveTab] = useState('tickets'); // Track active tab
   const [isNarrowScreen, setIsNarrowScreen] = useState(false); // Track screen size
 
@@ -19,55 +22,64 @@ const SalesSummaryPage = () => {
     return () => mediaQuery.removeEventListener('change', handleResize);
   }, []);
 
+  // Fetch data for tickets and revenue
   useEffect(() => {
-    // Fetch top 5 events by ticket count
-    fetch('http://localhost:5047/api/tickets/top-sales')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setSalesByTickets(data); // Update state with ticket count data
-        console.log('Fetched top 5 events by ticket count:', data);
-      })
-      .catch((error) => {
-        console.error('Error fetching top 5 events by ticket count:', error);
-        setError('Failed to fetch top 5 events by ticket count. Please try again later.');
-      });
+    const fetchData = async () => {
+      setLoading(true); // Start loading
+      setError(null); // Reset error state
 
-    // Fetch top 5 events by revenue
-    fetch('http://localhost:5047/api/tickets/top-revenue')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+      try {
+        // Fetch top 5 events by ticket count
+        const ticketsResponse = await fetch('http://localhost:5047/api/tickets/top-sales');
+        if (!ticketsResponse.ok) {
+          throw new Error(`Failed to fetch top 5 events by ticket count. Status: ${ticketsResponse.status}`);
         }
-        return response.json();
-      })
-      .then((data) => {
-        setSalesByRevenue(data); // Update state with revenue data
-        console.log('Fetched top 5 events by revenue:', data);
-      })
-      .catch((error) => {
-        console.error('Error fetching top 5 events by revenue:', error);
-        setError('Failed to fetch top 5 events by revenue. Please try again later.');
-      });
+        const ticketsData = await ticketsResponse.json();
+        setSalesByTickets(ticketsData);
+
+        // Fetch top 5 events by revenue
+        const revenueResponse = await fetch('http://localhost:5047/api/tickets/top-revenue');
+        if (!revenueResponse.ok) {
+          throw new Error(`Failed to fetch top 5 events by revenue. Status: ${revenueResponse.status}`);
+        }
+        const revenueData = await revenueResponse.json();
+        setSalesByRevenue(revenueData);
+      } catch (err) {
+        console.error('Error fetching data:', err); // Log error for debugging
+        setError('Failed to load data. Please try again later.'); // Set user-friendly error message
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchData();
   }, []); // Fetch data only once on component mount
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center mb-4">Sales Summary</h1>
+    <div className="container">
+      <h1 className="page-header">Sales Summary</h1>
 
       {/* Error Handling */}
-      {error ? (
+      {error && (
         <div className="alert alert-danger text-center" role="alert">
           {error}
         </div>
-      ) : (
+      )}
+
+      {/* Loading State */}
+      {loading && (
+        <div className="text-center">
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      {!loading && !error && (
         <>
           {/* Tabs for toggling between ticket count and revenue */}
-          <div className="d-flex justify-content-center mb-3">
+          <div className="sales-summary-tabs d-flex justify-content-center">
             <div className="btn-group">
               <button
                 className={`btn ${activeTab === 'tickets' ? 'btn-primary' : 'btn-outline-primary'}`}
