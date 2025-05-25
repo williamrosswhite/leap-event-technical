@@ -69,3 +69,77 @@ backend/coverage/
 *.sln.cache
 *.sln.docstates
 .fake
+
+# Ignore build outputs
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# Ignore temporary files
+*.tmp
+*.log
+*.vs/
+*.ncrunchsolution
+*.ncrunchproject
+_ReSharper.Caches/
+
+# Ignore test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.testsettings
+*.runsettings
+
+# Ignore NuGet packages
+*.nupkg
+packages/
+.nuget/
+
+# Ignore compiled files
+*.dll
+*.exe
+*.pdb
+*.mdb
+
+# Ignore generated files
+*.generated.cs
+*.Designer.cs
+
+# Ignore configuration files
+appsettings.*.json
+secrets.json
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore logs
+*.log
+
+# Ignore temporary files created by the build system
+*.cache
+*.csproj.user
+*.csproj.nuget.g.props
+*.csproj.nuget.g.targets
+
+# Ignore SQLite database files (if applicable)
+*.db
+*.sqlite
+*.sqlite3
+
+# Ignore test-specific files
+*.TestResults/
+*.testhost.*

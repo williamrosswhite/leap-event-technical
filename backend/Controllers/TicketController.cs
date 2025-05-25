@@ -44,11 +44,4 @@ public class TicketsController : ControllerBase
     var topEvents = _ticketService.GetTop5EventsByTotalSales();
     return Ok(topEvents);
   }
-    
-  [HttpGet("top-tickets")]
-  public IActionResult GetTopTickets([FromQuery] int limit = 100)
-  {
-      var tickets = _ticketService.GetTopTickets(limit);
-      return Ok(tickets);
-  }
 }
