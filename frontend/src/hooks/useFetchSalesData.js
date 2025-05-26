@@ -40,7 +40,7 @@ const useFetchSalesData = () => {
             name: event.eventName,
             startsOn: event.eventStartDate,
             endsOn: event.eventEndDate,
-            location: `$${event.totalSales.toLocaleString()} Total Revenue`,
+            location: event.totalSales, // Store raw number (in cents)
           }))
         );
       } catch (err) {
