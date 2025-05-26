@@ -55,7 +55,11 @@ const EventListingPage = () => {
           />
 
           {/* Conditional Rendering: Table for wide screens, Cards for narrow screens */}
-          <RenderEvents sortedEvents={sortedEvents} isNarrowScreen={isNarrowScreen} />
+          <RenderEvents
+            sortedEvents={sortedEvents}
+            isNarrowScreen={isNarrowScreen}
+            rightColumnLabel="Location" // Pass column title explicitly
+          />
         </>
       )}
     </div>
