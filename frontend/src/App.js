@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import Navbar from './components/Navbar';
 import EventListingPage from './pages/EventListingPage';
@@ -13,7 +13,8 @@ const App = () => {
         <Routes>
           <Route path="/events" element={<EventListingPage />} />
           <Route path="/sales-summary" element={<SalesSummaryPage />} />
-          <Route path="/" element={<EventListingPage />} />
+          {/* Redirect the default route (/) to /events */}
+          <Route path="/" element={<Navigate to="/events" />} />
         </Routes>
       </div>
     </Router>

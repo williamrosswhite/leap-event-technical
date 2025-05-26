@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const EventTable = ({ events }) => (
+const EventTable = ({ events, rightColumnLabel }) => (
   <table className="table table-bordered">
     <thead className="thead-light">
       <tr>
@@ -9,7 +9,7 @@ const EventTable = ({ events }) => (
         <th>Event Name</th>
         <th>Start Date</th>
         <th>End Date</th>
-        <th>Location</th>
+        <th>{rightColumnLabel}</th> {/* Dynamic column title */}
       </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@ const EventTable = ({ events }) => (
           <td>{event.name}</td>
           <td>{new Date(event.startsOn).toLocaleString()}</td>
           <td>{new Date(event.endsOn).toLocaleString()}</td>
-          <td>{event.location}</td>
+          <td>{event.location}</td> {/* Rightmost column value */}
         </tr>
       ))}
     </tbody>
@@ -36,6 +36,7 @@ EventTable.propTypes = {
       location: PropTypes.string.isRequired,
     })
   ).isRequired,
+  rightColumnLabel: PropTypes.string.isRequired, // Label for the rightmost column
 };
 
 export default EventTable;
