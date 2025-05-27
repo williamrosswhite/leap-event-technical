@@ -1,4 +1,4 @@
-# Leap Event Technology Project Report
+# Leap Event Technology Assessment Project
 
 ### How to run this project:
 
