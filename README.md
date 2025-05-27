@@ -9,6 +9,7 @@
 - Open a terminal and cd into leap-event-technical
 - cd into /backend
 - Run ``dotnet restore``
+- Run ``dotnet build``
 - Run ``dotnet run``
 - Swagger page will launch.
 - Open a second terminal in leap-event-technical root
