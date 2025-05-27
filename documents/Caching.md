@@ -1,4 +1,4 @@
-# High-Traffic Ticketing System Design with Caching Strategy
+# Design for a High-Traffic Ticketing System with Caching
 
 A ticketing system for a high-traffic event platform must handle thousands of concurrent users buying tickets. To ensure scalability, fault tolerance, and high availability, the system can leverage cloud services and distributed caching.
 
