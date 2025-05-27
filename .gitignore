@@ -30,7 +30,7 @@ frontend/npm-debug.log*
 # Database
 backend/Database/*.db
 backend/Database/*.sqlite
-!backend/Database/your-database-file.db
+!backend/Database/skillsAssessmentEvents.db
 
 # Build artifacts
 *.testhost.*
