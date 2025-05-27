@@ -38,6 +38,7 @@
 - Look into other ways I could have increased performance of sorting algorithm
 - Consider other ways to speed up performance
 - Improve aesthetics of pages
+	- I focused on solid functionality instead of aesthetics since that was the focus of the assignment
 	- Match font of Leap Event Technology Page
 	- Use same video background
 	- Other ways to make it look associated with Leap Event Technology page

@@ -11,6 +11,7 @@ const useFetchEvents = (days) => {
       setError(null);
 
       try {
+        // Obviously would secure this port if I kept working on this
         const response = await fetch(`http://localhost:5047/api/events?days=${days}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch events. Status: ${response.status}`);
