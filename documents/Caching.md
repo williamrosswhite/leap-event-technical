@@ -19,7 +19,7 @@ A ticketing system for a high-traffic event platform has to handle thousands of 
 ##### Database
  - Azure SQL Database for write heavy, secure data like user accounts, auth data, ticket purchase transactions, and other relational data with strict consistency requirements.
  - Azure Cosmos DB for read heavy, distributed, high access speed data like event metadata with cloud native NoSQL format data structure. 
-	 - Allows replication of data across multiple regions, providing worldwide low-latency access worldwide through automated routing, supporting both manual and automatic scaling.
+	 - Allows replication of data across multiple regions, providing low-latency access worldwide through automated routing, supporting both manual and automatic scaling.
 ##### Caching
 - Azure Cache for Redis to reduce database load and improve response times.
 	- Caches frequently accessed data like event details, ticket availability, and user session data.
