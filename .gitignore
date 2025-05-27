@@ -1,145 +1,39 @@
-# .gitignore for React frontend and C# backend
-
-# General
-.DS_Store
-Thumbs.db
-
-# Node.js (React Frontend)
-frontend/node_modules/
-frontend/build/
-frontend/.env
-frontend/.parcel-cache/
-frontend/.next/
-frontend/out/
-frontend/.turbo/
+# Frontend
 frontend/.eslintcache
+
+# Yarn Artifacts
 frontend/.yarn/*
 !frontend/.yarn/patches
 !frontend/.yarn/plugins
 !frontend/.yarn/releases
 !frontend/.yarn/sdks
 !frontend/.yarn/versions
-
-# Logs
-frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
 
-# C# (ASP.NET Core Backend)
-backend/bin/
-backend/obj/
-backend/*.user
-backend/*.suo
-backend/*.userosscache
-backend/*.sln.docstates
-backend/.vs/
-backend/.idea/
-backend/.vscode/
+# npm Artifacts
+frontend/node_modules/
+frontend/package-lock.json
+frontend/npm-debug.log*
+
+# C# (ASP.NET Core Backend and Tests)
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.idea/
+.vscode/
 
 # Database
 backend/Database/*.db
 backend/Database/*.sqlite
-backend/Database/*.bak
+!backend/Database/your-database-file.db
 
 # Build artifacts
-backend/*.dll
-backend/*.exe
-backend/*.pdb
-backend/*.cache
-backend/*.log
-backend/*.vspscc
-backend/*.vssscc
-backend/*.csproj.user
-backend/*.csproj.nuget.g.props
-backend/*.csproj.nuget.g.targets
-
-# Secrets
-backend/appsettings.json
-backend/appsettings.Development.json
-backend/secrets.json
-
-# Test results
-backend/TestResults/
-backend/*.trx
-backend/coverage/
-
-# IDE-specific files
-*.swp
-*.sln.ide
-*.sln.cache
-*.sln.docstates
-.fake
-
-# Ignore build outputs
-bin/
-obj/
-
-# Ignore user-specific files
-*.user
-*.rsuser
-*.suo
-*.userosscache
-*.sln.docstates
-
-# Ignore IDE-specific files
-.vscode/
-.idea/
-*.code-workspace
-
-# Ignore temporary files
-*.tmp
-*.log
-*.vs/
-*.ncrunchsolution
-*.ncrunchproject
-_ReSharper.Caches/
-
-# Ignore test results
-TestResults/
-*.trx
-*.coverage
-*.coveragexml
-*.testsettings
-*.runsettings
-
-# Ignore NuGet packages
-*.nupkg
-packages/
-.nuget/
-
-# Ignore compiled files
-*.dll
-*.exe
-*.pdb
-*.mdb
-
-# Ignore generated files
-*.generated.cs
-*.Designer.cs
-
-# Ignore configuration files
-appsettings.*.json
-secrets.json
-
-# Ignore OS-specific files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Ignore logs
-*.log
-
-# Ignore temporary files created by the build system
-*.cache
-*.csproj.user
-*.csproj.nuget.g.props
-*.csproj.nuget.g.targets
-
-# Ignore SQLite database files (if applicable)
-*.db
-*.sqlite
-*.sqlite3
-
-# Ignore test-specific files
-*.TestResults/
 *.testhost.*
+
+# Test Results
+tests/TestResults/

@@ -2,12 +2,27 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LeapEventTechnical.Tests;
 using System.Linq;
 using Models;
+using Moq;
+using NHibernate;
+using Microsoft.Extensions.Logging;
 
 namespace LeapEventTechnical.Tests
 {
     [TestClass]
     public class GetTop5EventsByTicketCountTests : BaseTicketServiceTests
     {
+        [TestInitialize]
+        public void Setup()
+        {
+            // Initialize mocks
+            _loggerMock = new Mock<ILogger<TicketService>>();
+            _ticketService = new TicketService(_sessionFactoryMock!.Object, _loggerMock.Object);
+
+            // Mock the session to return the dummy data
+            _sessionMock!.Setup(s => s.Query<Event>()).Returns(Events.AsQueryable());
+            _sessionMock.Setup(s => s.Query<TicketSales>()).Returns(TicketSales.AsQueryable());
+        }
+
         [TestMethod]
         public void ReturnsTop5EventsSortedByTicketCount()
         {
@@ -18,7 +33,6 @@ namespace LeapEventTechnical.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(3, result.Count); // There are 3 events in the dummy data
 
-            // Verify the order and ticket counts
             Assert.AreEqual("Event 1", result[0].EventName); // Event 1 has the highest ticket count
             Assert.AreEqual(3, result[0].TicketCount); // Event 1 has 3 tickets
 
@@ -53,36 +67,34 @@ namespace LeapEventTechnical.Tests
         public void Exactly5Events()
         {
             // Arrange
-            Events.Add(new Models.Event
+            Events.Add(new Event
             {
                 Id = "E4",
                 Name = "Event 4",
-                StartsOn = System.DateTime.Now.AddDays(7),
-                EndsOn = System.DateTime.Now.AddDays(8),
+                StartsOn = DateTime.Now.AddDays(7),
+                EndsOn = DateTime.Now.AddDays(8),
                 Location = "Location 4"
             });
-            Events.Add(new Models.Event
+            Events.Add(new Event
             {
                 Id = "E5",
                 Name = "Event 5",
-                StartsOn = System.DateTime.Now.AddDays(9),
-                EndsOn = System.DateTime.Now.AddDays(10),
+                StartsOn = DateTime.Now.AddDays(9),
+                EndsOn = DateTime.Now.AddDays(10),
                 Location = "Location 5"
             });
 
-            TicketSales.Add(new Models.TicketSales
+            TicketSales.Add(new TicketSales
             {
                 Id = "T10",
-                UserId = "U10",
-                PurchaseDate = System.DateTime.Now.AddDays(-1),
+                PurchaseDate = DateTime.Now.AddDays(-1),
                 PriceInCents = 1000,
                 Event = Events[3]
             });
-            TicketSales.Add(new Models.TicketSales
+            TicketSales.Add(new TicketSales
             {
                 Id = "T11",
-                UserId = "U11",
-                PurchaseDate = System.DateTime.Now.AddDays(-2),
+                PurchaseDate = DateTime.Now.AddDays(-2),
                 PriceInCents = 1500,
                 Event = Events[4]
             });
@@ -125,11 +137,10 @@ namespace LeapEventTechnical.Tests
         public void HandlesTies()
         {
             // Arrange
-            TicketSales.Add(new Models.TicketSales
+            TicketSales.Add(new TicketSales
             {
                 Id = "T10",
-                UserId = "U10",
-                PurchaseDate = System.DateTime.Now.AddDays(-1),
+                PurchaseDate = DateTime.Now.AddDays(-1),
                 PriceInCents = 1000,
                 Event = Events[0] // Add another ticket to Event 1 to create a tie
             });

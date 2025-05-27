@@ -11,8 +11,8 @@ public class TicketsController : ControllerBase
       ITicketService ticketService,
       ILogger<TicketsController> logger)
     {
-        _ticketService = ticketService;
-        _logger = logger;
+        _ticketService = ticketService ?? throw new ArgumentNullException(nameof(ticketService));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>

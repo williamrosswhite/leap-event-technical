@@ -1,6 +1,6 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Navbar from './components/Navbar';
 import EventListingPage from './pages/EventListingPage';
 import SalesSummaryPage from './pages/SalesSummaryPage';
@@ -9,11 +9,10 @@ const App = () => {
   return (
     <Router>
       <Navbar />
-      <div style={{ padding: '20px' }}>
+      <div className="p-3">
         <Routes>
           <Route path="/events" element={<EventListingPage />} />
           <Route path="/sales-summary" element={<SalesSummaryPage />} />
-          {/* Redirect the default route (/) to /events */}
           <Route path="/" element={<Navigate to="/events" />} />
         </Routes>
       </div>

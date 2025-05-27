@@ -11,8 +11,8 @@ public class EventsController : ControllerBase
         IEventService eventService,
         ILogger<EventsController> logger)
     {
-        _eventService = eventService;
-        _logger = logger;
+        _eventService = eventService ?? throw new ArgumentNullException(nameof(eventService));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>

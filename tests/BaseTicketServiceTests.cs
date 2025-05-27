@@ -1,38 +1,37 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Models;
-using DTOs;
 using NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace LeapEventTechnical.Tests
 {
     public abstract class BaseTicketServiceTests
     {
-        protected Mock<ISessionFactory>? _sessionFactoryMock;
-        protected Mock<ISession>? _sessionMock;
         protected TicketService? _ticketService;
 
-        // Keep the set accessor private
+        // Mocks
+        protected Mock<ISessionFactory>? _sessionFactoryMock;
+        protected Mock<ISession>? _sessionMock;
+        protected Mock<ILogger<TicketService>>? _loggerMock;
+
+        // Placeholders for dummy data
         protected List<Event> Events { get; set; } = new();
         protected List<TicketSales> TicketSales { get; set; } = new();
 
         [TestInitialize]
         public void BaseSetup()
         {
-            // Initialize mocks
+            // Arrange
             _sessionFactoryMock = new Mock<ISessionFactory>();
             _sessionMock = new Mock<ISession>();
+            _loggerMock = new Mock<ILogger<TicketService>>();
 
-            // Set up the session factory to return the mocked session
+            // Set up session factory to return the mocked session
             _sessionFactoryMock.Setup(f => f.OpenSession()).Returns(_sessionMock.Object);
 
-            // Initialize the TicketService with the mocked session factory
-            _ticketService = new TicketService(_sessionFactoryMock.Object);
+            // Initialize TicketService
+            _ticketService = new TicketService(_sessionFactoryMock.Object, _loggerMock.Object);
 
-            // Initialize dummy data
             InitializeDummyData();
 
             // Mock the session to return the dummy data
@@ -42,7 +41,7 @@ namespace LeapEventTechnical.Tests
 
         private void InitializeDummyData()
         {
-            // Initialize events
+            // Arrange: Initialize dummy data for this test
             Events = new List<Event>
             {
                 new Event
@@ -71,14 +70,11 @@ namespace LeapEventTechnical.Tests
                 }
             };
 
-            // Initialize ticket sales
             TicketSales = new List<TicketSales>
             {
-                // Tickets for Event 1
                 new TicketSales
                 {
                     Id = "T1",
-                    UserId = "U1",
                     PurchaseDate = DateTime.Now.AddDays(-1),
                     PriceInCents = 1000,
                     Event = Events[0]
@@ -86,7 +82,6 @@ namespace LeapEventTechnical.Tests
                 new TicketSales
                 {
                     Id = "T2",
-                    UserId = "U2",
                     PurchaseDate = DateTime.Now.AddDays(-2),
                     PriceInCents = 1500,
                     Event = Events[0]
@@ -94,17 +89,13 @@ namespace LeapEventTechnical.Tests
                 new TicketSales
                 {
                     Id = "T3",
-                    UserId = "U3",
                     PurchaseDate = DateTime.Now.AddDays(-3),
                     PriceInCents = 2000,
                     Event = Events[0]
                 },
-
-                // Tickets for Event 2
                 new TicketSales
                 {
                     Id = "T4",
-                    UserId = "U4",
                     PurchaseDate = DateTime.Now.AddDays(-1),
                     PriceInCents = 1200,
                     Event = Events[1]
@@ -112,7 +103,6 @@ namespace LeapEventTechnical.Tests
                 new TicketSales
                 {
                     Id = "T5",
-                    UserId = "U5",
                     PurchaseDate = DateTime.Now.AddDays(-2),
                     PriceInCents = 1800,
                     Event = Events[1]
@@ -120,17 +110,14 @@ namespace LeapEventTechnical.Tests
                 new TicketSales
                 {
                     Id = "T6",
-                    UserId = "U6",
                     PurchaseDate = DateTime.Now.AddDays(-3),
                     PriceInCents = 2200,
                     Event = Events[1]
                 },
 
-                // Tickets for Event 3
                 new TicketSales
                 {
                     Id = "T7",
-                    UserId = "U7",
                     PurchaseDate = DateTime.Now.AddDays(-1),
                     PriceInCents = 1300,
                     Event = Events[2]
@@ -138,7 +125,6 @@ namespace LeapEventTechnical.Tests
                 new TicketSales
                 {
                     Id = "T8",
-                    UserId = "U8",
                     PurchaseDate = DateTime.Now.AddDays(-2),
                     PriceInCents = 1700,
                     Event = Events[2]
@@ -146,7 +132,6 @@ namespace LeapEventTechnical.Tests
                 new TicketSales
                 {
                     Id = "T9",
-                    UserId = "U9",
                     PurchaseDate = DateTime.Now.AddDays(-3),
                     PriceInCents = 2100,
                     Event = Events[2]
@@ -154,7 +139,7 @@ namespace LeapEventTechnical.Tests
             };
         }
 
-        // Add protected methods to modify Events and TicketSales
+        // Protected methods to modify Events and TicketSales
         protected void SetEvents(List<Event> events)
         {
             Events = events;
