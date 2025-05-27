@@ -1,11 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 const EventTable = ({ events, rightColumnLabel }) => {
-  // Create a formatter for numbers with commas and two decimal places
+
   const currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'CAD',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
@@ -18,7 +17,7 @@ const EventTable = ({ events, rightColumnLabel }) => {
           <th>Event Name</th>
           <th>Start Date</th>
           <th>End Date</th>
-          <th>{rightColumnLabel}</th> {/* Dynamic column title */}
+          <th>{rightColumnLabel}</th>
         </tr>
       </thead>
       <tbody>

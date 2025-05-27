@@ -1,15 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import EventCard from './EventCard';
-import EventTable from './EventTable';
 
+// Display sales data in either card or table format based on screen size
 const SalesDataRenderer = ({ data, isNarrowScreen, cardLocationKey, renderTable }) => {
   const processedData = data.map((event) => ({
     id: event.id,
     name: event.name,
-    startsOn: new Date(event.startsOn).toLocaleString(), // Format date for display
-    endsOn: new Date(event.endsOn).toLocaleString(), // Format date for display
-    location: event[cardLocationKey], // Use the correct location key
+    startsOn: new Date(event.startsOn).toLocaleString(),
+    endsOn: new Date(event.endsOn).toLocaleString(), 
+    location: event[cardLocationKey], 
   }));
 
   return isNarrowScreen ? (

@@ -13,6 +13,7 @@ const useFetchSalesData = () => {
 
       try {
         // Fetch top 5 events by ticket count
+        // Obviously would secure this port if I kept working on this
         const ticketsResponse = await fetch('http://localhost:5047/api/tickets/top-sales');
         if (!ticketsResponse.ok) {
           throw new Error(`Failed to fetch top 5 events by ticket count. Status: ${ticketsResponse.status}`);
@@ -29,6 +30,7 @@ const useFetchSalesData = () => {
         );
 
         // Fetch top 5 events by revenue
+        // Obviously would secure this port if I kept working on this
         const revenueResponse = await fetch('http://localhost:5047/api/tickets/top-revenue');
         if (!revenueResponse.ok) {
           throw new Error(`Failed to fetch top 5 events by revenue. Status: ${revenueResponse.status}`);
@@ -40,7 +42,7 @@ const useFetchSalesData = () => {
             name: event.eventName,
             startsOn: event.eventStartDate,
             endsOn: event.eventEndDate,
-            location: event.totalSales, // Store raw number (in cents)
+            location: event.totalSales,
           }))
         );
       } catch (err) {
