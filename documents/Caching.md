@@ -1,6 +1,6 @@
 # High-Traffic Ticketing System Design with Caching Strategy
 
-A ticketing system for a high-traffic event platform has to handle thousands of concurrent users buying tickets. To ensure scalability, fault tolerance, and high availability, the system can leverage cloud services and distributed caching.
+A ticketing system for a high-traffic event platform must handle thousands of concurrent users buying tickets. To ensure scalability, fault tolerance, and high availability, the system can leverage cloud services and distributed caching.
 
 ### Key Elements
 
@@ -10,8 +10,9 @@ A ticketing system for a high-traffic event platform has to handle thousands of 
 ##### Load Balancer
 - Azure Front Door for global load balancing and DDoS protection.
 	- Azure Front Door routes traffic to nearest backend based on latency and supports multiple routing prioritization methods
-	- Provides built in caching for static content, Azure DDoS protection, Health probes, and protection from things like SQL injection and cross-site scripting.
-	- Routes around downed backends to keep service up
+	- Provides built-in caching for static content, Azure DDoS protection, Health probes, and protection from things like SQL injection and cross-site scripting.
+	- Routes around downed backends to keep service up.
+  - Alternatively we could manually customize our own load balancing of resources in Azure to suit our needs.
 ##### Backend
 - Built with ASP.NET Core, hosted on Azure App Service.
 - Implements RESTful APIs for ticket purchasing, event management, and user authentication.
@@ -30,20 +31,22 @@ A ticketing system for a high-traffic event platform has to handle thousands of 
 		- Alternatively, we could manually deploy customized Redis containers.
 ##### Queueing
 - Azure Service Bus is a message queuing service which can be leveraged for asynchronously handling spikes in traffic for processing ticket purchases asynchronously to handle spikes in traffic.
-	- I'm more familiar with rabbitMQ for more directly controlled queueing of messages between microservices, but Azure Service Bus presumably has the same functionality and additional integration benefits of being under the umbrella of Azure cloud along with everything else.
+	- I'm more familiar with RabbitMQ for more directly controlled queueing of messages between microservices, but Azure Service Bus presumably has the same functionality and additional integration benefits of being under the umbrella of Azure cloud along with everything else.
+<br><br>
 
 ---
 
-### **Architecture Diagram**
+### Architecture Diagram
 ```mermaid
 graph TD
     A[Users] -->|HTTP Requests| B[Azure Front Door]
-    B --> C[Azure Static Web Apps]
-    B --> D[Azure App Service Backend APIs]
-    D -->|Read/Write| E[Azure SQL Database]
-    D -->|Read/Write| F[Azure Cosmos DB]
-    D -->|Cache| G[Azure Cache for Redis]
-    D -->|Async Processing| H[Azure Service Bus]
-    H -->|Process Messages| E
+    B -->C[Azure Static Web Apps]
+    B -->D[Azure App Service Backend APIs]
+    D <-->|Secure SQL| E[Azure SQL Database]
+    D <-->|Distributed NoSQL| F[Azure Cosmos DB]
+    D <-->|Cache| G[Azure Cache for Redis]
     G -->|Cached Data| D
+    D <-->|Queue Messages| H[Azure Service Bus]
+    H <-->|Process and Update| E[Azure SQL Database]
     C -->|API Calls| D
+    D -->|API Responses| C

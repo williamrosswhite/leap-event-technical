@@ -1,18 +1,22 @@
 # Leap Event Technology Assessment Project
 
-### How to run this project:
+### Database preparation
 - Database setup:
 	- Corrected database file is included in the repo and should work out of the box
 	- I changed the datetime field type in DB Browser for SQLite to text, no script required
 		- There is no datetime type in SQLite, and datetime could not be validated by NHibernate.
-	- Based on the types of lookups needing to be done quickly and repeatedly, created the following indexes:
+	- Based on the types of lookups needing to be done quickly and repeatedly, I created the following indexes in the provided .db file:
 		- ``CREATE INDEX idx_events_startson ON Events(StartsOn);``
 		- ``CREATE INDEX idx_events_startson_endson ON Events(StartsOn, EndsOn);``
 		- ``CREATE INDEX idx_tickets_eventid ON TicketSales(EventId);``
 		- ``CREATE INDEX idx_tickets_eventid_purchasedate ON TicketSales(EventId, PurchaseDate);``
 		- ``CREATE INDEX idx_tickets_purchasedate ON TicketSales(PurchaseDate);``
-- Clone and repo: [https://github.com/williamrosswhite/leap-event-technical.git](https://github.com/williamrosswhite/leap-event-technical.git)
-- Open a terminal and cd into leap-event-technical
+
+### How to run this project:
+
+- Ensure you have the [.NET SDK](https://dotnet.microsoft.com/en-us/download) and [Node](https://nodejs.org/en/download) installed on your computer
+- Clone the repo: [https://github.com/williamrosswhite/leap-event-technical.git](https://github.com/williamrosswhite/leap-event-technical.git)
+- Open a terminal and cd into leap-event-technical 
 - cd into /backend
 - Run ``dotnet restore``
 - Run ``dotnet run``
@@ -39,9 +43,7 @@
 
 ### Things I wish I’d had more time to do:
 - Really wish I’d had the chance to make the backend service functions asynchronous but was held back by unfamiliarity with NHibernate and how to handle async in the tests.
-- Implement pagination to save load time.
 - Look into other ways I could have increased performance of sorting algorithm.
-- Consider other ways to speed up performance.
 - Improve aesthetics of pages.
 - I focused on solid functionality instead of aesthetics since that was the focus of the assignment.
 - Match font and background video of Leap Event Technology Page.
