@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Import custom components
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -13,15 +13,15 @@ import useMediaQuery from '../hooks/MediaQueryHandler';
 import useFetchSalesData from '../hooks/useFetchSalesData';
 
 // Import styling
-import '../styles/common.css'; // Import shared styles
-import '../styles/SalesSummaryPage.css'; // Import page-specific styles
+import '../styles/common.css';
+import '../styles/SalesSummaryPage.css';
 
 const SalesSummaryPage = () => {
   const { salesByTickets, salesByRevenue, loading, error } = useFetchSalesData();
-  const [activeTab, setActiveTab] = React.useState('tickets'); // Track active tab
-  const isNarrowScreen = useMediaQuery('(max-width: 768px)'); // Detect screen size
+  const [activeTab, setActiveTab] = React.useState('tickets'); // Default to tickets tab
+  const isNarrowScreen = useMediaQuery('(max-width: 768px)'); 
 
-  // Determine the right column title based on the active tab
+  // Set right column title based on active tab
   const rightColumnLabel = activeTab === 'tickets' ? 'Tickets Sold' : 'Total Revenue';
 
   return (
@@ -34,10 +34,9 @@ const SalesSummaryPage = () => {
       {/* Loading State */}
       {loading && <LoadingSpinner />}
 
-      {/* Main Content */}
       {!loading && !error && (
         <>
-          {/* Tabs for toggling between ticket count and revenue */}
+          {/* Toggle between between ticket count and revenue */}
           <div className="sales-summary-tabs d-flex justify-content-center">
             <ButtonGroup
               options={[
@@ -49,7 +48,7 @@ const SalesSummaryPage = () => {
             />
           </div>
 
-          {/* Conditional Rendering */}
+          {/* Conditional rendering, table for desktop cards for mobile */}
           <SalesDataRenderer
             data={activeTab === 'tickets' ? salesByTickets : salesByRevenue}
             isNarrowScreen={isNarrowScreen}
@@ -57,7 +56,7 @@ const SalesSummaryPage = () => {
             renderTable={(events) => (
               <EventTable
                 events={events}
-                rightColumnLabel={rightColumnLabel} // Pass dynamic column title
+                rightColumnLabel={rightColumnLabel} // Dynamic column title
               />
             )}
           />

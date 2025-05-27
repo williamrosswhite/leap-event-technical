@@ -1,9 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import EventCard from './EventCard';
 import EventTable from './EventTable';
 
-const RenderEvents = ({ sortedEvents, isNarrowScreen, rightColumnLabel }) => {
+// Display events in either card or table format based on screen size
+const EventsRenderer = ({ sortedEvents, isNarrowScreen, rightColumnLabel }) => {
   return isNarrowScreen ? (
     <div className="row">
       {sortedEvents.map((event) => (
@@ -15,7 +15,7 @@ const RenderEvents = ({ sortedEvents, isNarrowScreen, rightColumnLabel }) => {
   );
 };
 
-RenderEvents.propTypes = {
+EventsRenderer.propTypes = {
   sortedEvents: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -26,7 +26,7 @@ RenderEvents.propTypes = {
     })
   ).isRequired,
   isNarrowScreen: PropTypes.bool.isRequired,
-  rightColumnLabel: PropTypes.string.isRequired, // Add prop type for the column label
+  rightColumnLabel: PropTypes.string.isRequired,
 };
 
-export default RenderEvents;
+export default EventsRenderer;

@@ -1,10 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Moq;
 using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace LeapEventTechnical.Tests
 {
     [TestClass]
@@ -54,9 +49,9 @@ namespace LeapEventTechnical.Tests
         [TestMethod]
         public void NoEvents()
         {
-            // Arrange
-            SetEvents(new List<Event>()); // No events
-            SetTicketSales(new List<TicketSales>()); // No ticket sales
+            // Arrange: clear events and ticket sales
+            SetEvents(new List<Event>());
+            SetTicketSales(new List<TicketSales>());
 
             _sessionMock!.Setup(s => s.Query<Event>()).Returns(Events.AsQueryable());
             _sessionMock.Setup(s => s.Query<TicketSales>()).Returns(TicketSales.AsQueryable());
@@ -107,7 +102,6 @@ namespace LeapEventTechnical.Tests
             var ticketSales = Enumerable.Range(1, 10000).Select(i => new TicketSales
             {
                 Id = $"T{i}",
-                UserId = $"U{i}",
                 PurchaseDate = DateTime.Now.AddDays(-i),
                 PriceInCents = 1000 + i,
                 Event = events[i % events.Count]

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ButtonGroup = ({ options, selected, onClick }) => (
   <div className="btn-group">
     {options.map((option) => (

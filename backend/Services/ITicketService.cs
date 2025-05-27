@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using DTOs;
 
 public interface ITicketService

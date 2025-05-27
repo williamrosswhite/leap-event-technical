@@ -13,8 +13,8 @@ public static class NHibernateHelper
             if (_sessionFactory == null)
             {
                 var configuration = new Configuration();
-                configuration.Configure(); // Reads hibernate.cfg.xml
-                configuration.AddDirectory(new DirectoryInfo("NHibernateMappings")); // Load mapping files
+                configuration.Configure(); 
+                configuration.AddDirectory(new DirectoryInfo("NHibernateMappings")); 
                 _sessionFactory = configuration.BuildSessionFactory();
             }
             return _sessionFactory;

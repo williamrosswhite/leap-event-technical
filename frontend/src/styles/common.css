@@ -7,7 +7,7 @@
 .page-header {
   text-align: center;
   margin-bottom: 20px;
-  color: #007bff; /* Bootstrap primary color */
+  color: #007bff;
 }
 
 /* Buttons */
@@ -31,7 +31,7 @@
 }
 
 .table thead {
-  background-color: #f8f9fa; /* Light gray for table headers */
+  background-color: #f8f9fa;
 }
 
 .table-hover tbody tr:hover {

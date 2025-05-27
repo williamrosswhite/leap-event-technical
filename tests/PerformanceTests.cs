@@ -1,9 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace LeapEventTechnical.Tests
 {
@@ -26,7 +21,6 @@ namespace LeapEventTechnical.Tests
             var ticketSales = Enumerable.Range(1, 10000).Select(i => new TicketSales
             {
                 Id = $"T{i}",
-                UserId = $"U{i}",
                 PurchaseDate = DateTime.Now.AddDays(-i),
                 PriceInCents = 1000 + i,
                 Event = events[i % events.Count]
@@ -62,7 +56,6 @@ namespace LeapEventTechnical.Tests
             var ticketSales = Enumerable.Range(1, 10000).Select(i => new TicketSales
             {
                 Id = $"T{i}",
-                UserId = $"U{i}",
                 PurchaseDate = DateTime.Now.AddDays(-i),
                 PriceInCents = 1000 + i,
                 Event = events[i % events.Count]

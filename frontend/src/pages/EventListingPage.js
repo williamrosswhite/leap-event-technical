@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-// import components
+// Import components
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorAlert from '../components/ErrorAlert';
-import RenderEvents from '../components/RenderEvents';
+import EventsRenderer from '../components/RenderEvents';
 
-// import hooks
+// Import hooks
 import useMediaQuery from '../hooks/MediaQueryHandler';
 import EventFilters from '../hooks/EventFilters';
 import useFetchEvents from '../hooks/useFetchEvents';
 
-// import utility functions
+// Import utility functions
 import sortEvents from '../utils/sortEvents';
 
-// import styling
+// Import styling
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/common.css';
 import '../styles/EventListingPage.css';
@@ -23,13 +23,9 @@ const EventListingPage = () => {
   const [sortOrder, setSortOrder] = useState('asc'); // Default sorting order is ascending
   const [days, setDays] = useState(30); // Default filter for 30 days
 
-  // Use custom hook for fetching events
+  // Custom hooks
   const { events, loading, error } = useFetchEvents(days);
-
-  // Use custom hook for media query
   const isNarrowScreen = useMediaQuery('(max-width: 768px)');
-
-  // Sort events based on the selected criteria and order
   const sortedEvents = sortEvents(events, sortBy, sortOrder);
 
   return (
@@ -54,11 +50,11 @@ const EventListingPage = () => {
             setSortOrder={setSortOrder}
           />
 
-          {/* Conditional Rendering: Table for wide screens, Cards for narrow screens */}
-          <RenderEvents
+          {/* Conditional rendering, table for desktop cards for mobile */}
+          <EventsRenderer
             sortedEvents={sortedEvents}
             isNarrowScreen={isNarrowScreen}
-            rightColumnLabel="Location" // Pass column title explicitly
+            rightColumnLabel="Location"
           />
         </>
       )}
